@@ -12,18 +12,18 @@ Key features
 - Database queue driver for background jobs (default)
 - Tests written with Pest (unit and integration)
 
-## Design choices (short)
+## Design choices
 - Rules/criteria are stored as JSON on achievements/badges to allow adding new rule types without schema changes.
 - Event-driven: unlocking an achievement fires events so side-effects (cashback, notifications) are decoupled.
 - Payment gateway interface allows swapping mock/gateway implementations in tests and production.
 - Database queue (QUEUE_CONNECTION=database) is used for simplicity in local/dev. The project includes a sample `docker-compose.yml` with RabbitMQ for production-like setups (optional).
 
-## Quick setup (local macOS / Linux)
+## Quick setup 
 Prerequisites
 - PHP 8.1+ with extensions required by Laravel
 - Composer
 - SQLite (default) or MySQL/Postgres
-- (Optional) Docker + Docker Compose
+- (Optional) Docker
 
 1. Clone and install
 
@@ -40,7 +40,6 @@ php artisan key:generate
 - For Paystack cashback (optional):
 	- `PAYSTACK_SECRET` — your Paystack secret key
 	- `PAYSTACK_RECIPIENT` — recipient code or id (for demo the code reads this env var)
-	- If you do not want real transfers while testing, set `PAYSTACK_DISABLED=true` in a test `.env` or `.env.testing` and the gateway can be guarded in code.
 
 3. Run migrations & seed
 
@@ -62,8 +61,6 @@ php artisan serve
 ```bash
 php artisan queue:work --tries=3
 ```
-
-If you prefer RabbitMQ, use `docker-compose.yml` included in the repo to run a `rabbitmq` service and set `QUEUE_CONNECTION=rabbitmq`.
 
 ## API Endpoints (summary)
 - POST /api/register → register and receive a Sanctum token
@@ -154,4 +151,3 @@ This project uses [Laravel Reverb](https://laravel.com/docs/12.x/broadcasting#re
     .listen('App\\Events\\BadgeUnlocked', (data) => {
       // handle badge unlocked
     });
-    
