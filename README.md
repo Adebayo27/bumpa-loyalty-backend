@@ -53,6 +53,11 @@ This creates the schema and seeds sample achievements, badges and a test user.
 4. Run the app
 
 ```bash
+composer run dev
+```
+OR
+
+```bash
 php artisan serve
 ```
 
